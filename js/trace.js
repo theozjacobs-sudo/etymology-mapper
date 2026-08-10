@@ -198,21 +198,31 @@
     const chain = placeable.slice().reverse();
     chain.push({ code: "en", lang: ENGLISH.name, form: word, gloss: "", loc: ENGLISH.loc.slice(), big: true });
 
-    // nudge repeated locations apart (e.g. Middle English on top of Old English)
-    // and flip a nudged stage's label to the other side of its dot
+    // Nudge co-located stages apart. Claim spots newest-first so the English
+    // headword always keeps its home position, and resolve collisions with a
+    // small ring of offsets around a stage's own homeland — never a march east.
     const used = [];
-    chain.forEach(s => {
-      let [lon, lat] = s.loc;
-      let tries = 0;
-      while (used.some(([ulon, ulat]) => Math.abs(ulon - lon) < 3.6 && Math.abs(ulat - lat) < 2.4) && tries < 8) {
-        lon += 4.2;
-        lat += (tries % 2 === 0 ? -2.4 : 2.4);
-        tries++;
+    const collides = (lon, lat) =>
+      used.some(([ulon, ulat]) => Math.abs(ulon - lon) < 2.2 && Math.abs(ulat - lat) < 1.2);
+    const RING = [[0, 0], [-2.6, 1.6], [2.6, -1.6], [-2.6, -1.6], [2.6, 1.6], [0, 3.0], [0, -3.0], [-5.0, 0], [5.0, 0]];
+    for (let i = chain.length - 1; i >= 0; i--) {
+      const s = chain[i];
+      const [lon0, lat0] = s.loc;
+      let placed = false;
+      for (let scale = 1; scale <= 2 && !placed; scale++) {
+        for (const [dlon, dlat] of RING) {
+          const lon = lon0 + dlon * scale, lat = lat0 + dlat * scale;
+          if (!collides(lon, lat)) {
+            s.loc = [lon, lat];
+            s.nudged = dlon !== 0 || dlat !== 0;
+            used.push([lon, lat]);
+            placed = true;
+            break;
+          }
+        }
       }
-      s.loc = [lon, lat];
-      s.nudged = tries > 0;
-      used.push([lon, lat]);
-    });
+      if (!placed) used.push(s.loc); // give up gracefully; labels alternate sides anyway
+    }
 
     const nodes = chain.map((s, i) => ({
       id: "s" + i,

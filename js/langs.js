@@ -27,8 +27,8 @@
     "alg-pro": { name: "Proto-Algonquian", loc: [-85.0, 46.0] },
 
     // --- Germanic ---
-    "ang": { name: "Old English", loc: [-1.2, 52.0] },
-    "enm": { name: "Middle English", loc: [-1.3, 52.4] },
+    "ang": { name: "Old English", loc: [0.3, 51.3] },
+    "enm": { name: "Middle English", loc: [-2.9, 54.3] },
     "non": { name: "Old Norse", loc: [7.5, 60.5] },
     "gml": { name: "Middle Low German", loc: [10.5, 53.5] },
     "nds": { name: "Low German", loc: [10.5, 53.5] },

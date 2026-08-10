@@ -266,11 +266,10 @@
       put("form", formY, n.form);
       if (n.gloss) put("gloss", glossY, n.gloss);
 
-      if (n.date || n.note) {
-        g.style("cursor", "help")
-          .on("mousemove", (event) => showTooltip(event, n))
-          .on("mouseleave", () => tooltip.style("opacity", 0));
-      }
+      g.style("cursor", "help")
+        .on("mousemove", (event) => showTooltip(event, n))
+        .on("click", (event) => { event.stopPropagation(); showTooltip(event, n); })
+        .on("mouseleave", () => tooltip.style("opacity", 0));
 
       if (animate) {
         g.style("opacity", 0)
@@ -304,7 +303,8 @@
 
   function showTooltip(event, n) {
     const parts = [];
-    parts.push(`<span class="tt-form">${n.form}</span>`);
+    parts.push(`<span class="tt-form">${n.lang} ${n.form}</span>`);
+    if (n.gloss) parts.push(`<span>“${n.gloss}”</span>`);
     if (n.date) parts.push(`<span class="tt-date">${n.date}</span>`);
     if (n.note) parts.push(`<span>${n.note}</span>`);
     const rect = stage.getBoundingClientRect();
