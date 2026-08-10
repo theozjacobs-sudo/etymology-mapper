@@ -153,6 +153,19 @@
         if (code && form && LANGS[code] && !stages.some(s => s.code === code)) {
           stages.push(makeStage(code, form, ""));
         }
+      } else if (t.name === "etymon") {
+        // newer template style: {{etymon|en|:bor|sw:safari<t:journey>|...}}
+        // tokens are "lang:form" with optional <t:gloss> annotations
+        for (const p of t.pos) {
+          const tok = p.trim();
+          if (!tok || tok.startsWith(":") || tok === "en") continue;
+          const m = tok.match(/^([a-zA-Z][a-zA-Z0-9.-]*):(.+)$/);
+          if (!m || m[1] === "en") continue;
+          const g = m[2].match(/<t:([^>]*)>/);
+          const form = cleanText(m[2].replace(/<[^>]*>/g, ""));
+          if (form && form !== "-") pushStage(stages, m[1], form, g ? g[1] : "");
+          if (stages.length >= MAX_STAGES) break;
+        }
       } else if (t.name === "cog" || t.name === "doublet" || t.name === "noncog") {
         // cognates/doublets are side-branches, not the chain — and everything
         // after "Cognate with..." tends to be comparison, so stop here.

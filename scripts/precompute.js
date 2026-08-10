@@ -113,7 +113,7 @@ for (const word of WORDS) {
   if (!wikitext) { missed++; continue; }
   const chain = trace.extractChain(wikitext);
   const placeable = chain.filter(s => LANGS[s.code]);
-  if (placeable.length < 2) { skipped++; continue; }
+  if (placeable.length < 1) { skipped++; continue; }
   result[word] = chain.map(s => ({ code: s.code, form: s.form, gloss: s.gloss || undefined }));
   ok++;
   if (ok % 25 === 0) console.log(`  ...${ok} traced so far (last: ${word})`);
