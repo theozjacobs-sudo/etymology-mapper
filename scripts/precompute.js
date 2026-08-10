@@ -108,7 +108,7 @@ let ok = 0, skipped = 0, missed = 0;
 
 for (const word of WORDS) {
   if (curated.has(word) || result[word]) continue;
-  sleep(120);
+  sleep(80);
   const wikitext = fetchWikitext(word);
   if (!wikitext) { missed++; continue; }
   const chain = trace.extractChain(wikitext);

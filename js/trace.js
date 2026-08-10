@@ -110,8 +110,13 @@
   // Returns stages ordered newest -> oldest (excluding the English headword):
   // [{ code, lang, form, gloss, loc }]
   function extractChain(wikitext) {
-    const ety = englishEtymologySection(wikitext);
+    let ety = englishEtymologySection(wikitext);
     if (!ety) return [];
+
+    // The derivation chain ends where the prose turns to side notes:
+    // "Displaced native ...", "Compare ...", "Cognate with ...", "Doublet of ..."
+    const cutoff = ety.search(/\b(Displaced|displacing|Compare|Cognate|Doublet|More at|Related to|See also)\b/);
+    if (cutoff >= 0) ety = ety.slice(0, cutoff);
 
     const templates = scanTemplates(ety).map(t => ({ ...parseTemplate(t.raw), pos0: t.pos }));
     const stages = [];
@@ -181,16 +186,18 @@
     chain.push({ code: "en", lang: ENGLISH.name, form: word, gloss: "", loc: ENGLISH.loc.slice(), big: true });
 
     // nudge repeated locations apart (e.g. Middle English on top of Old English)
+    // and flip a nudged stage's label to the other side of its dot
     const used = [];
     chain.forEach(s => {
       let [lon, lat] = s.loc;
       let tries = 0;
-      while (used.some(([ulon, ulat]) => Math.abs(ulon - lon) < 2.4 && Math.abs(ulat - lat) < 1.8) && tries < 8) {
-        lon += 2.6;
-        lat += (tries % 2 === 0 ? -1.6 : 1.6);
+      while (used.some(([ulon, ulat]) => Math.abs(ulon - lon) < 3.6 && Math.abs(ulat - lat) < 2.4) && tries < 8) {
+        lon += 4.2;
+        lat += (tries % 2 === 0 ? -2.4 : 2.4);
         tries++;
       }
       s.loc = [lon, lat];
+      s.nudged = tries > 0;
       used.push([lon, lat]);
     });
 
@@ -201,7 +208,7 @@
       gloss: s.gloss || undefined,
       loc: s.loc,
       big: !!s.big,
-      dy: s.big ? -12 : (i % 2 === 0 ? -14 : 28)
+      dy: s.big ? -12 : ((i % 2 === 0) !== !!s.nudged ? -14 : 28)
     }));
     const edges = chain.slice(1).map((s, i) => ({
       from: "s" + i,
