@@ -13,7 +13,14 @@ Pick a word (or a pair of words that share a root) and watch its journey draw it
 - **guest + host** — split from one PIE word for "stranger"
 - **shirt + skirt** — the same Germanic garment, landed twice
 - **chess + check** — from the Persian word for "king"
-- single-word journeys: **orange**, **coffee**, **sugar**, **avocado**
+- **wine + vine**, **guest + host**, and single-word journeys like **orange**,
+  **coffee**, **ketchup**, **paradise**, **robot**, **juggernaut**…
+
+**Or type any word.** The trace box parses the word's etymology section on
+English Wiktionary live — its `{{inh}}`/`{{bor}}`/`{{der}}` derivation templates
+form an ordered chain of (language, form, gloss) stages, which get placed using
+a built-in table of ~180 language homelands. About 550 common words are also
+precomputed into `data/traced.js`, so those work instantly (and offline).
 
 Hover any word on the map for dates and historical notes. Click the sea to skip
 the animation; **↻ Replay** runs it again. Light and dark themes included.
@@ -55,6 +62,10 @@ Add an entry to `js/data.js`. Each entry is a small graph:
 The map projection auto-fits to the stages, so entries can span anywhere from the
 North Sea to the Pacific. Locations are deliberately approximate — they mark
 roughly where a language community lived when it passed the word along.
+
+To refresh or grow the offline cache of auto-traced words, edit the word list in
+`scripts/precompute.js` and run `node scripts/precompute.js` (it's resumable and
+merges into the existing `data/traced.js`).
 
 ## Notes on the etymologies
 

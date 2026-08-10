@@ -277,5 +277,203 @@ window.ETYMOLOGIES = [
       { from: "ahuacatl", to: "aguacate", bend: 0.12 },
       { from: "aguacate", to: "avocado", bend: -0.2 }
     ]
+  },
+
+  {
+    id: "wine-vine",
+    words: ["wine", "vine"],
+    caption: "“wine” and “vine” both poured out of Latin vīnum",
+    nodes: [
+      { id: "vinum", lang: "Latin", form: "vīnum", gloss: "wine",
+        loc: [12.5, 41.9], date: "possibly from a Mediterranean word older than Latin itself", dy: 26 },
+      { id: "wina", lang: "Proto-Germanic", form: "*wīną", gloss: "wine",
+        loc: [10.0, 56.0], date: "borrowed early, along with the Roman wine trade", dy: -14 },
+      { id: "win", lang: "Old English", form: "wīn", gloss: "wine",
+        loc: [0.6, 51.9], date: "", dy: 28 },
+      { id: "wine", lang: "English", form: "wine", big: true,
+        loc: [-1.8, 53.4], date: "", dy: -12 },
+      { id: "vinea", lang: "Latin", form: "vīnea", gloss: "vineyard; grapevine",
+        loc: [8.6, 44.8], date: "", dy: -14 },
+      { id: "vigne", lang: "Old French", form: "vigne", gloss: "vine",
+        loc: [2.4, 47.9], date: "c. 1100", dy: 28 },
+      { id: "vine", lang: "English", form: "vine", big: true,
+        loc: [-3.4, 51.2], date: "c. 1300", dy: 26 }
+    ],
+    edges: [
+      { from: "vinum", to: "wina", bend: 0.25 },
+      { from: "wina", to: "win", bend: 0.2 },
+      { from: "win", to: "wine", bend: 0.15 },
+      { from: "vinum", to: "vinea", bend: -0.2 },
+      { from: "vinea", to: "vigne", bend: -0.2 },
+      { from: "vigne", to: "vine", bend: -0.18 }
+    ]
+  },
+
+  {
+    id: "whiskey",
+    words: ["whiskey"],
+    caption: "“whiskey” is Irish for ‘water of life’",
+    nodes: [
+      { id: "uisce", lang: "Old Irish", form: "uisce", gloss: "water",
+        loc: [-8.5, 53.6], date: "", dy: -14 },
+      { id: "uiscebeatha", lang: "Irish", form: "uisce beatha", gloss: "water of life",
+        loc: [-7.0, 52.2], date: "monks translating Latin aqua vītae — the distillers' name for spirits", dy: 28 },
+      { id: "whiskey", lang: "English", form: "whiskey", big: true,
+        loc: [-1.8, 52.8], date: "1700s, first anglicized as ‘usquebaugh’", dy: -12 }
+    ],
+    edges: [
+      { from: "uisce", to: "uiscebeatha", bend: 0.25 },
+      { from: "uiscebeatha", to: "whiskey", bend: -0.18 }
+    ]
+  },
+
+  {
+    id: "algebra",
+    words: ["algebra"],
+    caption: "“algebra” first meant setting broken bones",
+    nodes: [
+      { id: "jabr", lang: "Arabic", form: "الجبر al-jabr", gloss: "the reuniting of broken parts",
+        loc: [44.4, 33.3], date: "from al-Khwārizmī's 9th-century Baghdad treatise on equations", dy: 28 },
+      { id: "algebra-lat", lang: "Medieval Latin", form: "algebra", gloss: "bone-setting; algebra",
+        loc: [11.9, 43.5], date: "in Europe it meant surgical bone-setting first", dy: -14 },
+      { id: "algebra", lang: "English", form: "algebra", big: true,
+        loc: [-1.6, 52.7], date: "the math sense settled in the 1550s", dy: -12 }
+    ],
+    edges: [
+      { from: "jabr", to: "algebra-lat", bend: 0.2 },
+      { from: "algebra-lat", to: "algebra", bend: 0.18 }
+    ]
+  },
+
+  {
+    id: "paradise",
+    words: ["paradise"],
+    caption: "“paradise” began as a Persian walled garden",
+    nodes: [
+      { id: "pairidaeza", lang: "Avestan", form: "pairi-daēza", gloss: "walled enclosure, royal garden",
+        loc: [62.0, 36.0], date: "Old Iranian; the Persian kings' enclosed hunting gardens", dy: -14 },
+      { id: "paradeisos", lang: "Ancient Greek", form: "παράδεισος parádeisos", gloss: "royal park; (later) Eden",
+        loc: [23.7, 38.0], date: "Xenophon borrowed it describing Persia, c. 400 BCE", dy: 28 },
+      { id: "paradisus", lang: "Latin", form: "paradīsus", gloss: "paradise",
+        loc: [12.5, 41.9], date: "", dy: -14 },
+      { id: "paradis", lang: "Old French", form: "paradis", gloss: "paradise",
+        loc: [2.4, 48.3], date: "c. 1100", dy: 28 },
+      { id: "paradise", lang: "English", form: "paradise", big: true,
+        loc: [-1.6, 52.7], date: "c. 1200", dy: -12 }
+    ],
+    edges: [
+      { from: "pairidaeza", to: "paradeisos", bend: 0.2 },
+      { from: "paradeisos", to: "paradisus", bend: 0.15 },
+      { from: "paradisus", to: "paradis", bend: 0.18 },
+      { from: "paradis", to: "paradise", bend: 0.15 }
+    ]
+  },
+
+  {
+    id: "assassin",
+    words: ["assassin"],
+    caption: "“assassin” came home with the Crusaders",
+    nodes: [
+      { id: "hashishin", lang: "Arabic", form: "حشّاشين ḥashshāshīn", gloss: "the name given to the Nizari sect",
+        loc: [36.6, 35.0], date: "Crusaders retold tales of the sect's feared emissaries", dy: 28 },
+      { id: "assassinus", lang: "Medieval Latin", form: "assassinus", gloss: "hired killer",
+        loc: [11.9, 43.5], date: "", dy: -14 },
+      { id: "assassin-fr", lang: "Middle French", form: "assassin", gloss: "assassin",
+        loc: [2.35, 48.6], date: "", dy: 28 },
+      { id: "assassin", lang: "English", form: "assassin", big: true,
+        loc: [-1.6, 52.7], date: "1530s", dy: -12 }
+    ],
+    edges: [
+      { from: "hashishin", to: "assassinus", bend: 0.2 },
+      { from: "assassinus", to: "assassin-fr", bend: 0.18 },
+      { from: "assassin-fr", to: "assassin", bend: 0.15 }
+    ]
+  },
+
+  {
+    id: "ketchup",
+    words: ["ketchup"],
+    caption: "“ketchup” was a fish sauce long before it met a tomato",
+    nodes: [
+      { id: "ketsiap", lang: "Hokkien", form: "膎汁 kê-tsiap", gloss: "brine of pickled fish",
+        loc: [118.1, 24.5], date: "coastal Fujian", dy: -14 },
+      { id: "kecap", lang: "Malay", form: "kicap", gloss: "fish sauce; soy sauce",
+        loc: [101.7, 3.1], date: "picked up by English sailors trading through the strait", dy: 28 },
+      { id: "ketchup", lang: "English", form: "ketchup", big: true,
+        loc: [-1.6, 52.7], date: "1680s — the tomato version is American, 1800s", dy: -12 }
+    ],
+    edges: [
+      { from: "ketsiap", to: "kecap", bend: 0.2 },
+      { from: "kecap", to: "ketchup", bend: -0.35 }
+    ]
+  },
+
+  {
+    id: "robot",
+    words: ["robot"],
+    caption: "“robot” escaped from a Czech play in 1920",
+    nodes: [
+      { id: "orbota", lang: "Proto-Slavic", form: "*orbota", gloss: "servitude, drudgery",
+        loc: [25.0, 50.0], date: "", dy: -14 },
+      { id: "robota", lang: "Czech", form: "robota", gloss: "forced labor",
+        loc: [14.4, 50.1], date: "Karel Čapek's play R.U.R. named its artificial workers roboti", dy: 28 },
+      { id: "robot", lang: "English", form: "robot", big: true,
+        loc: [-1.6, 52.7], date: "1922, with the London staging of R.U.R.", dy: -12 }
+    ],
+    edges: [
+      { from: "orbota", to: "robota", bend: 0.15 },
+      { from: "robota", to: "robot", bend: 0.18 }
+    ]
+  },
+
+  {
+    id: "coach",
+    words: ["coach"],
+    caption: "every “coach” is named after one Hungarian village",
+    nodes: [
+      { id: "kocsi", lang: "Hungarian", form: "kocsi", gloss: "cart ‘of Kocs’ — the village famous for them",
+        loc: [18.0, 47.6], date: "15th century; Kocs built the best light carriages in Europe", dy: -14 },
+      { id: "coche", lang: "French", form: "coche", gloss: "coach",
+        loc: [2.35, 48.6], date: "", dy: 28 },
+      { id: "coach", lang: "English", form: "coach", big: true,
+        loc: [-1.6, 52.7], date: "1550s; the trainer sense is 1830s Oxford slang — a tutor ‘carries’ you through the exam", dy: -12 }
+    ],
+    edges: [
+      { from: "kocsi", to: "coche", bend: 0.18 },
+      { from: "coche", to: "coach", bend: 0.15 }
+    ]
+  },
+
+  {
+    id: "juggernaut",
+    words: ["juggernaut"],
+    caption: "“juggernaut” rolled out of a temple procession in Puri",
+    nodes: [
+      { id: "jagannatha", lang: "Sanskrit", form: "जगन्नाथ Jagannātha", gloss: "‘lord of the world’ — a title of Vishnu",
+        loc: [85.8, 19.8], date: "European travellers described the huge temple cart at Puri as unstoppable", dy: -14 },
+      { id: "juggernaut", lang: "English", form: "juggernaut", big: true,
+        loc: [-1.6, 52.7], date: "1841 in the ‘unstoppable force’ sense", dy: -12 }
+    ],
+    edges: [
+      { from: "jagannatha", to: "juggernaut", bend: -0.25 }
+    ]
+  },
+
+  {
+    id: "pajamas",
+    words: ["pajamas"],
+    caption: "“pajamas” are Persian for ‘leg garment’",
+    nodes: [
+      { id: "payjama", lang: "Persian", form: "پايجامه pāy-jāma", gloss: "leg garment",
+        loc: [52.5, 32.5], date: "", dy: -14 },
+      { id: "hindi-payjama", lang: "Hindi-Urdu", form: "पाजामा pāyjāma", gloss: "loose light trousers",
+        loc: [77.2, 28.6], date: "everyday dress across South Asia", dy: 28 },
+      { id: "pajamas", lang: "English", form: "pajamas", big: true,
+        loc: [-1.6, 52.7], date: "1800s, brought home by the British in India", dy: -12 }
+    ],
+    edges: [
+      { from: "payjama", to: "hindi-payjama", bend: -0.2 },
+      { from: "hindi-payjama", to: "pajamas", bend: 0.3 }
+    ]
   }
 ];

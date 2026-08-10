@@ -44,6 +44,69 @@
     if (current) render(current, true);
   });
 
+  // ---------- type-any-word tracing ----------
+  const statusEl = document.getElementById("status");
+  let statusTimer = null;
+
+  function setStatus(msg, sticky) {
+    clearTimeout(statusTimer);
+    if (!msg) { statusEl.classList.remove("show"); return; }
+    statusEl.textContent = msg;
+    statusEl.classList.add("show");
+    if (!sticky) statusTimer = setTimeout(() => statusEl.classList.remove("show"), 7000);
+  }
+
+  async function fetchWikitext(word) {
+    const url = "https://en.wiktionary.org/w/api.php?action=parse&redirects=1&prop=wikitext" +
+      "&format=json&formatversion=2&origin=*&page=" + encodeURIComponent(word);
+    const resp = await fetch(url);
+    if (!resp.ok) throw new Error("HTTP " + resp.status);
+    const json = await resp.json();
+    return json.parse ? json.parse.wikitext : null;
+  }
+
+  function showAuto(entry) {
+    current = entry;
+    chips.classed("active", false);
+    render(entry, true);
+  }
+
+  async function traceAndShow(input) {
+    const word = input.trim().toLowerCase();
+    if (!word) return;
+
+    const curated = window.ETYMOLOGIES.find(e => e.words.includes(word));
+    if (curated) { setStatus(""); select(curated); return; }
+
+    const cached = window.TRACED && window.TRACED[word];
+    if (cached) { setStatus(""); showAuto(EtymTrace.buildFromRaw(word, cached)); return; }
+
+    setStatus("Tracing “" + word + "” on Wiktionary…", true);
+    try {
+      let wikitext = await fetchWikitext(word);
+      if (!wikitext && input.trim() !== word) wikitext = await fetchWikitext(input.trim());
+      if (!wikitext) { setStatus("Couldn't find “" + word + "” on Wiktionary."); return; }
+      const chain = EtymTrace.extractChain(wikitext);
+      const entry = EtymTrace.buildEntry(word, chain);
+      if (!entry) {
+        setStatus("Found “" + word + "”, but its etymology section doesn't have a mappable chain — try a chip word instead.");
+        return;
+      }
+      setStatus("");
+      showAuto(entry);
+    } catch (err) {
+      const offline = window.TRACED ? Object.keys(window.TRACED).length : 0;
+      setStatus(offline
+        ? "This page can't reach Wiktionary, but " + offline + " common words are built in — try another word, or run the full site for live tracing."
+        : "Couldn't reach Wiktionary — check your connection and try again.");
+    }
+  }
+
+  document.getElementById("trace-form").addEventListener("submit", (event) => {
+    event.preventDefault();
+    traceAndShow(document.getElementById("trace-input").value);
+  });
+
   // Clicking the sea skips to the end of the animation.
   svg.on("click", () => finishAnimation());
 

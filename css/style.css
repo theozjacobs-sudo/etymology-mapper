@@ -78,10 +78,57 @@ header {
 
 .chips {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scrollbar-width: thin;
   gap: 6px;
   flex: 1 1 auto;
+  min-width: 0;
+  padding-bottom: 2px;
 }
+
+#trace-form {
+  display: flex;
+  gap: 6px;
+  flex: 0 0 auto;
+}
+
+#trace-input {
+  font: inherit;
+  font-size: 13px;
+  padding: 6px 12px;
+  width: 150px;
+  border-radius: 999px;
+  border: 1px solid var(--panel-border);
+  background: var(--chip-bg);
+  color: var(--ink);
+}
+
+#trace-input::placeholder { color: var(--ink-3); }
+
+#trace-input:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+#status {
+  position: absolute;
+  top: 10px;
+  left: 14px;
+  max-width: 360px;
+  padding: 7px 12px;
+  background: var(--tooltip-bg);
+  color: var(--tooltip-ink);
+  font-size: 12.5px;
+  line-height: 1.45;
+  border-radius: 8px;
+  opacity: 0;
+  transition: opacity 0.15s;
+  pointer-events: none;
+  z-index: 11;
+}
+
+#status.show { opacity: 1; }
 
 .chip {
   font: inherit;
